@@ -344,7 +344,7 @@ packages:
 
   # Junctek KHF UART
   shunt:
-    url: https://github.com/QueezZ/esphome-yambms
+    url: https://github.com/Qu33zZ/esphome-yambms
     ref: main
     refresh: 0s
     files:
