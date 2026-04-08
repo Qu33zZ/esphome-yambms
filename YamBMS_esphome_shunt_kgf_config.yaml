@@ -157,8 +157,14 @@ substitutions:
   # | Shunt Settings                       |
   # +--------------------------------------+
   # uart_esp_1 pin override (shunt)
-  tx_pin_1: '5'
-  rx_pin_1: '4'
+  tx_pin_1: "5"
+  rx_pin_1: "4"
+
+  # canbus_mcp2515
+  spi_mosi_pin: "23"
+  spi_miso_pin: "27"
+  spi_clk_pin: "14"
+  mcp2515_cs_pin: "15"
   shunt_update_interval: "3s" # frequency at which Shunt data is refreshed
   # +--------------------------------------+
   # | BMS Settings                         |
