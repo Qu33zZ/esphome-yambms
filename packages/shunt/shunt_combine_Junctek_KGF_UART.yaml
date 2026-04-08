@@ -1,0 +1,8 @@
+# Junctek KG-F shunt integration for YamBMS
+# GitHub  : https://github.com/Tommixoft/esphome-junctek_kgf
+#
+# YamBMS ( Yet another multi-BMS Merging Solution )
+
+packages:
+  shunt_sensors: !include shunt_sensors_Junctek_KGF_UART.yaml
+  shunt_combine: !include shunt_combine.yaml

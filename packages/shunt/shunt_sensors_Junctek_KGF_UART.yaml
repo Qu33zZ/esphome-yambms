@@ -1,0 +1,78 @@
+# Junctek KG-F shunt - ESPHome component by Tommixoft
+# GitHub  : https://github.com/Tommixoft/esphome-junctek_kgf
+#
+# YamBMS ( Yet another multi-BMS Merging Solution )
+
+packages:
+  shunt_base: !include shunt_base.yaml
+
+# +--------------------------------------+
+# | Component settings                   |
+# +--------------------------------------+
+
+external_components:
+  - source: github://Tommixoft/esphome-junctek_kgf@main
+    refresh: 0s
+
+# UART baud_rate : 115200
+
+# +--------------------------------------+
+# | Component entities                   |
+# +--------------------------------------+
+
+binary_sensor:
+  # online_status is derived from voltage > 0 (not available directly from the component)
+  - platform: template
+    id: shunt${shunt_id}_online_status
+    device_id: shunt_${shunt_id}
+    name: "Online status"
+    lambda: |-
+      if (id(shunt${shunt_id}_voltage).state > 0)
+        return true;
+      else
+        return false;
+
+sensor:
+  - platform: junctek_kgf
+    uart_id: ${shunt_uart_id}
+    address: 1
+    invert_current: false
+    # --- Core sensors required by YamBMS ---
+    voltage:
+      id: shunt${shunt_id}_voltage
+      device_id: shunt_${shunt_id}
+      name: "Voltage"
+    current:
+      id: shunt${shunt_id}_current
+      device_id: shunt_${shunt_id}
+      name: "Current"
+    power:
+      id: shunt${shunt_id}_power
+      device_id: shunt_${shunt_id}
+      name: "Power"
+    battery_level:
+      id: shunt${shunt_id}_soc
+      device_id: shunt_${shunt_id}
+      name: "State of Charge"
+    # --- Optional extra sensors ---
+    temperature:
+      device_id: shunt_${shunt_id}
+      name: "Temperature"
+    amp_hour_remain:
+      device_id: shunt_${shunt_id}
+      name: "Ah Remaining"
+    amp_hour_used_total:
+      device_id: shunt_${shunt_id}
+      name: "Ah Used Total"
+    amp_hour_charged_total:
+      device_id: shunt_${shunt_id}
+      name: "Ah Charged Total"
+    # Note: battery_charged_energy / battery_discharged_energy in the KGF component
+    # are instantaneous power values (W), not cumulative energy (kWh).
+    # Daily energy totals are computed by shunt_base.yaml using total_daily_energy.
+    battery_life:
+      device_id: shunt_${shunt_id}
+      name: "Battery Life Remaining"
+    output_status:
+      device_id: shunt_${shunt_id}
+      name: "Output Status"
